@@ -41,6 +41,7 @@ def new_asset(dove_file, newpks_file, old_asset_file, new_asset_file):
 
     fields = ['TowerID',
               'DoveID',
+              'TowerBase',
               'County',
               'Place',
               'Place2',
