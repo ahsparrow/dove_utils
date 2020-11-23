@@ -10,7 +10,7 @@ def new_asset(dove_file, asset_file):
     fields = ['TowerBase',
               'County',
               'Place',
-              'Place2',
+              'PlaceCL',
               'Dedicn',
               'Bells',
               'Wt',
