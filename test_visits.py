@@ -1,19 +1,43 @@
+import argparse
 import csv
+import datetime
 import random
+import sys
 
-reader = csv.DictReader(open("dove.txt"), delimiter="\\")
-ids = [d['DoveID'] for d in reader]
+import lorem
 
-visits = []
-for i in range(100):
-    visits.append({
-        'DoveId': random.choice(ids),
-        'Date': "2020-7-27",
-        'Notes': " ".join(random.choices(["bell", "peal", "bob doubles", "wonky"], k=5)),
-        'Peal' : random.choice("YN"),
-        'Quarter': random.choice("YN")})
+def make_visits(dove_file, out_file, num_visits):
+    reader = csv.DictReader(dove_file, delimiter="\\")
+    ids = [d['TowerBase'] for d in reader]
 
-writer = csv.DictWriter(open("visits.csv", "w"), ['DoveId', 'Date', 'Notes', 'Peal', 'Quarter'])
-writer.writeheader()
-writer.writerows(visits)
+    visits = []
+    for i in range(num_visits):
+        dt = datetime.date.today() - \
+                datetime.timedelta(days=random.randint(0, 3650))
+        pq = random.choice("PQN")
+
+        visits.append({
+            'TowerBase': random.choice(ids),
+            'Date': dt.isoformat(),
+            'Notes': lorem.get_sentence(word_range=(1, 5)),
+            'Peal' : "Y" if pq == "P" else "N",
+            'Quarter': "Y" if pq == "Q" else "N"
+        })
+
+    writer = csv.DictWriter(
+            out_file, ['TowerBase', 'Date', 'Notes', 'Peal', 'Quarter'])
+    writer.writeheader()
+    writer.writerows(visits)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--visits", "-v", type=int, default=10,
+                        help="Number of visits")
+    parser.add_argument('dove_file', type=argparse.FileType('r'),
+                        default=sys.stdin)
+    parser.add_argument('out_file', type=argparse.FileType('w'),
+                        default=sys.stdout)
+    args = parser.parse_args()
+
+    make_visits(args.dove_file, args.out_file, args.visits)
 
