@@ -3,9 +3,10 @@ import csv
 import sys
 
 def new_asset(dove_file, asset_file):
-    # Read Dove file ignoring towers with temporary TowerBase (>9000)
+    # Read Dove file, ignoring towers with temporary TowerBase and carillons
     reader = csv.DictReader(dove_file, delimiter="\\")
-    dove = [x for x in reader if int(x['TowerBase']) < 9000]
+    dove = [x for x in reader if
+            int(x['TowerBase']) < 9000 and int(x['Bells']) <= 16]
 
     fields = ['TowerBase',
               'County',
