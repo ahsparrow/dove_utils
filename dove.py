@@ -17,8 +17,7 @@ def new_asset(dove_file, asset_file):
               'Bells',
               'Wt',
               'UR',
-              'PracN',
-              'PrXF',
+              'Practice',
               'Lat',
               'Long']
 
