@@ -11,7 +11,7 @@ def parse(dove_file):
         place = tower['PlaceCL'] or tower['Place']
 
         # Skip Carillons
-        if tower['RingType'] != "Full circle ring":
+        if tower['RingType'] != "Full-circle ring":
             print("Carillon: " + place, file=sys.stderr)
             continue
 
@@ -54,7 +54,7 @@ if __name__ == "__main__":
                         help="Input CSV file (default stdin)")
     parser.add_argument('json_file', type=argparse.FileType('w'),
                         nargs='?', default=sys.stdout,
-                        help="Output CSV file (default stdout)")
+                        help="Output JSON file (default stdout)")
     args = parser.parse_args()
 
     towers = parse(args.dove_file)
