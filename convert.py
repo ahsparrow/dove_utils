@@ -65,7 +65,9 @@ if __name__ == "__main__":
     if args.json:
         json.dump(towers, args.output_file, indent=2)
     else:
-        fieldnames=(towers[0].keys())
+        # Specify field names to get consistent order
+        fieldnames = ['towerId', 'place', 'dedication', 'county', 'latitude',
+                      'longitude', 'bells', 'weight', 'unringable', 'practice']
         writer = csv.DictWriter(args.output_file, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(towers)
