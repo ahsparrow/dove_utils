@@ -33,7 +33,7 @@ def parse(dove_file):
         county = tower['County'] or tower['Country']
 
         towers.append({
-                'id': tower_base,
+                'towerId': tower_base,
                 'place': place,
                 'dedication': tower['Dedicn'],
                 'county': county,
@@ -52,10 +52,20 @@ if __name__ == "__main__":
     parser.add_argument('dove_file', type=argparse.FileType('r'),
                         nargs='?', default=sys.stdin,
                         help="Input CSV file (default stdin)")
-    parser.add_argument('json_file', type=argparse.FileType('w'),
+    parser.add_argument('output_file', type=argparse.FileType('w'),
                         nargs='?', default=sys.stdout,
-                        help="Output JSON file (default stdout)")
+                        help="Output file (default stdout)")
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('--json', action='store_true', help='JSON output')
+    group.add_argument('--csv', action='store_true', help='CSV output')
     args = parser.parse_args()
 
     towers = parse(args.dove_file)
-    json.dump(towers, args.json_file, indent=2)
+
+    if args.json:
+        json.dump(towers, args.output_file, indent=2)
+    else:
+        fieldnames=(towers[0].keys())
+        writer = csv.DictWriter(args.output_file, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(towers)
