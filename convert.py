@@ -37,6 +37,7 @@ def parse(dove_file):
                 'place': place,
                 'dedication': tower['Dedicn'],
                 'county': county,
+                'iso3166': tower['ISO3166code'],
                 'latitude': latitude,
                 'longitude': longitude,
                 'bells': int(tower['Bells']),
@@ -66,8 +67,19 @@ if __name__ == "__main__":
         json.dump(towers, args.output_file, indent=2)
     else:
         # Specify field names to get consistent order
-        fieldnames = ['towerId', 'place', 'dedication', 'county', 'latitude',
-                      'longitude', 'bells', 'weight', 'unringable', 'practice']
+        fieldnames = [
+                'towerId',
+                'place',
+                'dedication',
+                'county',
+                'iso3166',
+                'latitude',
+                'longitude',
+                'bells',
+                'weight',
+                'unringable',
+                'practice'
+                ]
         writer = csv.DictWriter(args.output_file, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(towers)
