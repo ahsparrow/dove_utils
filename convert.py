@@ -16,6 +16,10 @@ def parse(dove_file):
             continue
 
         # Skip unassigned or temporary TowerBase IDs
+        if not tower['TowerBase']:
+            print("Unspecified Tower Base: " + place, file=sys.stderr)
+            continue
+
         tower_base = int(tower['TowerBase'])
         if tower_base == 0 or tower_base >= 9000:
             print("Temporary TowerBase: " + place, file=sys.stderr)
