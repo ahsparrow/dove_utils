@@ -36,6 +36,13 @@ def parse(dove_file):
         # Use country where county isn't specified
         county = tower['County'] or tower['Country']
 
+        # Tenor weight - may be undefined
+        try:
+            weight = int(tower["Wt"])
+        except ValueError:
+            print("Weight not specified: " + place, file=sys.stderr)
+            weight = 0
+
         towers.append({
                 'towerId': tower_base,
                 'place': place,
@@ -45,7 +52,7 @@ def parse(dove_file):
                 'latitude': latitude,
                 'longitude': longitude,
                 'bells': int(tower['Bells']),
-                'weight': int(tower['Wt']),
+                'weight': weight,
                 'unringable': tower['UR'] != "",
                 'practice':  tower['Practice']
                 })
