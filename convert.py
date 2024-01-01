@@ -7,8 +7,8 @@ def parse(dove_file):
     towers = []
     reader = csv.DictReader(dove_file)
     for tower in reader:
-        # There isn't really a satisfactory tower name in the Dove data
-        place = tower['PlaceCL'] or tower['Place']
+        # Place
+        place = tower['Place']
 
         # Skip Carillons
         if tower['RingType'] != "Full-circle ring":
